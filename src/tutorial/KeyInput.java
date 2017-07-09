@@ -22,14 +22,14 @@ public class KeyInput extends KeyAdapter{
 				if(key == KeyEvent.VK_UP || key == KeyEvent.VK_W){
 					player.setVelY(-5);
 				}
-				if(key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S){
+				else if(key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S){
 					player.setVelY(5);
 				}
-				if(key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D){
+				else if(key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D){
 					player.setVelX(5);
 					player.playerImage = Game.playerImage;
 				}
-				if(key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A){
+				else if(key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A){
 					tempObject.setVelX(-5);
 					player.playerImage = Game.playerImageSide;
 				}
