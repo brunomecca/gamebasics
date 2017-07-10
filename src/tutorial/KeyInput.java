@@ -16,7 +16,6 @@ public class KeyInput extends KeyAdapter{
 		int key = e.getKeyCode();
 		for(int i =0 ; i < handler.object.size(); i++){
 			GameObject tempObject = handler.object.get(i);
-			
 			if(tempObject.id == ID.Player){
 				Player player = (Player) tempObject;
 				if(key == KeyEvent.VK_UP || key == KeyEvent.VK_W){
@@ -33,15 +32,8 @@ public class KeyInput extends KeyAdapter{
 					tempObject.setVelX(-5);
 					player.playerImage = Game.playerImageSide;
 				}
-				if(player.x >= 68 && player.x <= 68+88 && player.y <= 93){
-					Player.usingComputer = true;
-				}
-				else{
-					Player.usingComputer = false;
-				}
-				if(player.x >= 238 && player.x <= 348 && player.y >=332 && player.y <= 377 && key == KeyEvent.VK_ENTER)
-					HUD.ENERGY = HUD.FULLENERGY;
 			}
+
 		}
 		if(key == KeyEvent.VK_ESCAPE) System.exit(1);
 	}
@@ -52,11 +44,40 @@ public class KeyInput extends KeyAdapter{
 		for(int i =0 ; i < handler.object.size(); i++){
 			GameObject tempObject = handler.object.get(i);
 			if(tempObject.id == ID.Player){
+				Player player = (Player) tempObject;
 				if(key == KeyEvent.VK_UP || key == KeyEvent.VK_W) tempObject.setVelY(0);
-				if(key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) tempObject.setVelY(0);
-				if(key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) tempObject.setVelX(0);
-				if(key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) tempObject.setVelX(0);
+				else if(key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) tempObject.setVelY(0);
+				else if(key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) tempObject.setVelX(0);
+				else if(key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) tempObject.setVelX(0);
+				// pc1 = 40+88, pc2 = 40+88+30, pc3 = 40+88+30+88+30, pc4 = 40+88+30+88+30+88+30+88+30, pc5 = 40+88+30+88+30+88+30+88+30
+				// o -15 e +15 da soma é para a "gordura" e facilitar o usuário a entrar no pc
+				if(player.x >= 40-15 && player.x <= 40+88+15 && player.y <= 93 && key == KeyEvent.VK_ENTER){
+					Player.usingComputer = true;
+					Game.computers[0].inUse();
+				}//PC1
+				else if(player.x >= 40+88+30-15 && player.x <= 40+88+30+88+15 && player.y <= 93 && key == KeyEvent.VK_ENTER){
+					Player.usingComputer = true;
+					Game.computers[1].inUse();
+				}//PC2
+				else if(player.x >= 40+88+30+88+30-15 && player.x <= 40+88+30+88+30+88+15 && player.y <= 93 && key == KeyEvent.VK_ENTER){
+					Player.usingComputer = true;
+					Game.computers[2].inUse();
+				}//PC3
+				else if(player.x >= 40+88+30+88+30+88+30-15 && player.x <= 40+88+30+88+30+88+30+88+15 && player.y <= 93 && key == KeyEvent.VK_ENTER){
+					Player.usingComputer = true;
+					Game.computers[3].inUse();
+				}//PC4
+				else if(player.x >= 40+88+30+88+30+88+30+88+30-15 && player.x <= 40+88+30+88+30+88+30+88+30+88+15 && player.y <= 93 && key == KeyEvent.VK_ENTER){
+					Player.usingComputer = true;
+					Game.computers[4].inUse();
+				}//PC5
+				else{
+					Player.usingComputer = false;
+				}
+				if(player.x >= 238 && player.x <= 348 && player.y >=332 && player.y <= 377 && key == KeyEvent.VK_ENTER)
+					HUD.ENERGY = HUD.FULLENERGY;
 			}
+			
 		}
 	}
 }

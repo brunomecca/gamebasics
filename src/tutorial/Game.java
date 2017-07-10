@@ -19,14 +19,16 @@ public class Game extends Canvas implements Runnable{
 	private HUD hud;
 	
 	public static BufferedImage playerImage, playerImageSide;
-	public static BufferedImage computer[] = new BufferedImage[5];
+	public static BufferedImage computerImages[] = new BufferedImage[5];
 	public static BufferedImage mainScene;
 	public static BufferedImage managerScene;
+	
+	public static Computer computers[] = new Computer[5];
 	
 	public Game(){
 		handler = new Handler();
 		this.addKeyListener(new KeyInput(handler));
-		
+
 		new Window(WIDTH, HEIGHT, "Game", this);
 		hud = new HUD();
 		BufferedImageLoader loader = new BufferedImageLoader();
@@ -34,8 +36,9 @@ public class Game extends Canvas implements Runnable{
 		playerImageSide = loader.loadImage("/playerSide.png");
 		int locais[] = {40, 40+88+30, 40+88+30+88+30, 40+88+30+88+30+88+30, 40+88+30+88+30+88+30+88+30};
 		for(int i = 0 ; i < 5; i++){
-			computer[i] = loader.loadImage("/computer" + (i+1) + ".png");
-			handler.addObject(new Computer(locais[i],0,ID.Computer, i+1, computer[i]));
+			computerImages[i] = loader.loadImage("/computer" + (i+1) + ".png");
+			computers[i] = new Computer(locais[i],0,ID.Computer, i+1, computerImages[i],i+1);
+			handler.addObject(computers[i]);
 		}		
 		mainScene = loader.loadImage("/cenario.png");
 		
