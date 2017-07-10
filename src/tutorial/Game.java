@@ -32,7 +32,7 @@ public class Game extends Canvas implements Runnable{
 		BufferedImageLoader loader = new BufferedImageLoader();
 		playerImage = loader.loadImage("/player.png");
 		playerImageSide = loader.loadImage("/playerSide.png");
-		int locais[] = {40, 40+88+30, 40+88+30+88+30, 40+88+30+88+30+88+30, 40+88+30+88+30+88+30+88+30};
+		int locais[] = {39, 40+88+30, 40+88+30+88+30, 40+88+30+88+30+88+30, 40+88+30+88+30+88+30+88+30};
 		for(int i = 0 ; i < 5; i++){
 			computer[i] = loader.loadImage("/computer" + (i+1) + ".png");
 			handler.addObject(new Computer(locais[i],0,ID.Computer, i+1, computer[i]));
