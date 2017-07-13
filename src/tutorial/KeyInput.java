@@ -12,7 +12,6 @@ public class KeyInput extends KeyAdapter{
 	}
 	
 	public void keyPressed(KeyEvent e){
-		BufferedImageLoader loader = new BufferedImageLoader();
 		int key = e.getKeyCode();
 		for(int i =0 ; i < handler.object.size(); i++){
 			GameObject tempObject = handler.object.get(i);

@@ -7,12 +7,16 @@ public class HUD {
 	
 	public static int ENERGY = 200;
 	public static int FULLENERGY = 200;
-	
+	private int counter = 0;
 	public void tick(){
 		if(Player.usingComputer){
-			ENERGY--;
+			counter++;
+			if(counter == 250){
+				ENERGY--;
+				counter = 0;
+			}
+			ENERGY = Game.clamp(ENERGY, 0,200);
 		}
-		ENERGY = Game.clamp(ENERGY, 0,200);
 	}
 	
 	public void render(Graphics g){
