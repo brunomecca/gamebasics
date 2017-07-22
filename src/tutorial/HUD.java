@@ -11,7 +11,7 @@ public class HUD {
 	public void tick(){
 		if(Player.usingComputer){
 			counter++;
-			if(counter == 250){
+			if(counter == 50){
 				ENERGY--;
 				counter = 0;
 			}

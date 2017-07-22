@@ -51,30 +51,29 @@ public class KeyInput extends KeyAdapter{
 				// pc1 = 40+88, pc2 = 40+88+30, pc3 = 40+88+30+88+30, pc4 = 40+88+30+88+30+88+30+88+30, pc5 = 40+88+30+88+30+88+30+88+30
 				// o -15 e +15 da soma é para a "gordura" e facilitar o usuário a entrar no pc
 				if(player.x >= 40-15 && player.x <= 40+88+15 && player.y <= 93 && key == KeyEvent.VK_ENTER){
-					Player.usingComputer = true;
 					Game.computers[0].inUse();
 				}//PC1
 				else if(player.x >= 40+88+30-15 && player.x <= 40+88+30+88+15 && player.y <= 93 && key == KeyEvent.VK_ENTER){
-					Player.usingComputer = true;
 					Game.computers[1].inUse();
 				}//PC2
 				else if(player.x >= 40+88+30+88+30-15 && player.x <= 40+88+30+88+30+88+15 && player.y <= 93 && key == KeyEvent.VK_ENTER){
-					Player.usingComputer = true;
 					Game.computers[2].inUse();
 				}//PC3
 				else if(player.x >= 40+88+30+88+30+88+30-15 && player.x <= 40+88+30+88+30+88+30+88+15 && player.y <= 93 && key == KeyEvent.VK_ENTER){
-					Player.usingComputer = true;
 					Game.computers[3].inUse();
 				}//PC4
 				else if(player.x >= 40+88+30+88+30+88+30+88+30-15 && player.x <= 40+88+30+88+30+88+30+88+30+88+15 && player.y <= 93 && key == KeyEvent.VK_ENTER){
-					Player.usingComputer = true;
 					Game.computers[4].inUse();
 				}//PC5
 				else{
 					Player.usingComputer = false;
 				}
-				if(player.x >= 238 && player.x <= 348 && player.y >=332 && player.y <= 377 && key == KeyEvent.VK_ENTER)
+				if(player.x >= 238 && player.x <= 348 && player.y >=332 && player.y <= 377 && key == KeyEvent.VK_ENTER){
+					Game.texto = "Energia recuperada! (-1 dia)";
+					player.diasRestantes--;
+					player.diasRestantes = Game.clamp(player.diasRestantes, 0, player.dias);
 					HUD.ENERGY = HUD.FULLENERGY;
+				}
 			}
 			
 		}

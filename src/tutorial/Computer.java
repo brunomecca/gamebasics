@@ -37,18 +37,40 @@ public class Computer extends GameObject{
 	
 	public void inUse(){
 		if(this.computerNumber == 1){
+			
 			System.out.println("USANDO O 1");
+			Player.usingComputer = true;
 		}
 		else if(this.computerNumber == 2){
+			if(complete[1] == false){
+				Game.texto = "Você ainda não completou a fase 1!";
+				return;
+			}
+			Player.usingComputer = true;
 			System.out.println("USANDO O 2");
 		}
 		else if(this.computerNumber == 3){
+			if(complete[2] == false){
+				Game.texto = "Você ainda não completou a fase 2!";
+				return;
+			}
+			Player.usingComputer = true;
 			System.out.println("USANDO O 3");
 		}
 		else if(this.computerNumber == 4){
+			if(complete[3] == false){
+				Game.texto = "Você ainda não completou a fase 3!";
+				return;
+			}
+			Player.usingComputer = true;
 			System.out.println("USANDO O 4");
 		}
 		else if(this.computerNumber == 5){
+			if(complete[4] == false){
+				Game.texto = "Você ainda não completou a fase 4!";
+				return;
+			}
+			Player.usingComputer = true;
 			System.out.println("USANDO O 5");
 		}
 	}
