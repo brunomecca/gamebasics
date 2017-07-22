@@ -6,12 +6,11 @@ import java.awt.image.BufferedImage;
 public class Computer extends GameObject{
 	int number;
 	BufferedImage image;
-	
 	int computerNumber;
+	boolean complete[] = new boolean[5];
 	
 	public Computer(int x, int y, ID id) {
 		super(x, y, id);
-		
 	}
 
 	public Computer(int x, int y, ID id, int number, BufferedImage image, int computerNumber) {
@@ -30,7 +29,6 @@ public class Computer extends GameObject{
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(image, x, y, null);
-		
 	}
 	
 	public int getX(){ return this.x; }

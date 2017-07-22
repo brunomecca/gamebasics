@@ -17,31 +17,37 @@ public class Game extends Canvas implements Runnable{
 	
 	private HUD hud;
 	
+	static BufferedImage states[] = new BufferedImage[5];
+	
+	private Menu menu;
+	
 	public static BufferedImage playerImage, playerImageSide;
 	public static BufferedImage computerImages[] = new BufferedImage[5];
 	public static BufferedImage mainScene;
-	public static BufferedImage managerScene;
+	public static BufferedImage locked, dislocked, done;
 	
 	public static Computer computers[] = new Computer[5];
 	
+	public static BufferedImageLoader loader = new BufferedImageLoader();
+	
+	public enum STATE {
+		Menu,Game
+	}
+	
+	public STATE gameState = STATE.Menu;
+	boolean firstTimeLoader = true;
 	public Game(){
 		handler = new Handler();
-		this.addKeyListener(new KeyInput(handler));
-
-		new Window(WIDTH, HEIGHT, "Game", this);
-		hud = new HUD();
-		BufferedImageLoader loader = new BufferedImageLoader();
-		playerImage = loader.loadImage("/player.png");
-		playerImageSide = loader.loadImage("/playerSide.png");
-		int locais[] = {40, 40+88+30, 40+88+30+88+30, 40+88+30+88+30+88+30, 40+88+30+88+30+88+30+88+30};
-		for(int i = 0 ; i < 5; i++){
-			computerImages[i] = loader.loadImage("/computer" + (i+1) + ".png");
-			computers[i] = new Computer(locais[i],0,ID.Computer, i+1, computerImages[i],i+1);
-			handler.addObject(computers[i]);
-		}		
-		mainScene = loader.loadImage("/cenario.png");
+		menu = new Menu(this);
+		locked = loader.loadImage("/locked.png");
+		dislocked = loader.loadImage("/dislocked.png");
+		done = loader.loadImage("/done.png");
 		
-		handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player));
+		this.addKeyListener(new KeyInput(handler));
+		this.addMouseListener(menu);
+		new Window(WIDTH, HEIGHT, "Game", this);
+		
+		mainScene = loader.loadImage("/menucenario.png");	
 	}
 	
 	public synchronized void start(){
@@ -95,8 +101,39 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	private void tick(){
-		handler.tick();
-		hud.tick();
+		if(gameState == STATE.Game){
+			if(firstTimeLoader){
+				states[0] = dislocked;
+				states[1] = locked;
+				states[2] = locked;
+				states[3] = locked;
+				states[4] = locked;
+				
+				hud = new HUD();
+				
+				playerImage = loader.loadImage("/player.png");
+				playerImageSide = loader.loadImage("/playerSide.png");
+				int locais[] = {40, 40+88+30, 40+88+30+88+30, 40+88+30+88+30+88+30, 40+88+30+88+30+88+30+88+30};
+				for(int i = 0 ; i < 5; i++){
+					computerImages[i] = loader.loadImage("/computer" + (i+1) + ".png");
+					computers[i] = new Computer(locais[i],0,ID.Computer, i+1, computerImages[i],i+1);
+					handler.addObject(computers[i]);
+
+				}		
+				mainScene = loader.loadImage("/cenario.png");
+				
+				handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player));
+
+				firstTimeLoader = false;
+				menu = null;
+			}
+			handler.tick();
+			hud.tick();
+		}
+		else if(gameState == STATE.Menu){
+			menu.tick();
+		}
+		
 	}
 	
 	private void render(){
@@ -109,10 +146,23 @@ public class Game extends Canvas implements Runnable{
 		Graphics g = bs.getDrawGraphics();
 		
 		g.drawImage(mainScene, 0, 0, null);
-
+		
+		int localX = 40+15;
+		for(int i =0  ;i < 5 ; i++){
+			g.drawImage(states[i], localX, 100, null);
+			localX = localX + 88+ 30+15;
+		}
+		
 		handler.render(g);
 		
-		hud.render(g);
+		if(gameState == STATE.Game){
+			if(!firstTimeLoader)
+				hud.render(g);
+		}
+		else if(gameState == STATE.Menu){
+			menu.render(g);
+		}
+		
 		
 		g.dispose();
 		bs.show();	
