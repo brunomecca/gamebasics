@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 public class Game extends Canvas implements Runnable{
 	
@@ -112,8 +113,7 @@ public class Game extends Canvas implements Runnable{
 			if(firstTimeLoader){
 				keyInput = new KeyInput(handler);
 				this.addKeyListener(keyInput);
-				
-				states[0] = dislocked;
+				states[0] = locked;
 				states[1] = locked;
 				states[2] = locked;
 				states[3] = locked;
@@ -126,12 +126,12 @@ public class Game extends Canvas implements Runnable{
 				int locais[] = {40, 40+88+30, 40+88+30+88+30, 40+88+30+88+30+88+30, 40+88+30+88+30+88+30+88+30};
 				for(int i = 0 ; i < 5; i++){
 					computerImages[i] = loader.loadImage("/computer" + (i+1) + ".png");
-					computers[i] = new Computer(locais[i],0,ID.Computer, i+1, computerImages[i],i+1);
+					computers[i] = new Computer(locais[i],0,ID.Computer, i+1, computerImages[i],i+1, this);
 					handler.addObject(computers[i]);
 
 				}		
 				mainScene = loader.loadImage("/cenario.png");
-				player = new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player, 100);
+				player = new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player, 10);
 				handler.addObject(player);
 				
 				firstTimeLoader = false;
@@ -157,7 +157,6 @@ public class Game extends Canvas implements Runnable{
 		Graphics g = bs.getDrawGraphics();
 		
 		g.drawImage(mainScene, 0, 0, null);
-
 		int localX = 40+15;
 		for(int i =0  ;i < 5 ; i++){
 			g.drawImage(states[i], localX, 100, null);
@@ -194,5 +193,23 @@ public class Game extends Canvas implements Runnable{
 	}
 	public void addKey(){
 		this.addKeyListener(keyInput);
+	}
+	
+	static boolean firstTalkGerente = true;
+	static boolean firstTalkVera = true;
+	
+	public static void gerente(){
+		String textos[] = {"Acho que você já pode ir testar!","O problema não foi solucionado."
+				, "Eu não sei, cara.", "Acho que sim.", "Pra cima.","Computador, sabe?"};
+		Random r = new Random();
+		Game.texto = textos[r.nextInt(textos.length)];
+	}
+	
+	public static void vera(){
+		String textos[] = {"Eu sou a Vera mesmo!","Sou muito bonita."
+				, "Teste exaustivo é outra história!", "Teste caixa branca é aquele que vemos o código.", "As vezes um ponto e vírgula faz a diferença."
+				,"C A I X A  P R E T A ! Esse é fácil, mas temos que bolar os testes."};
+		Random r = new Random();
+		Game.texto = textos[r.nextInt(textos.length)];
 	}
 }

@@ -74,6 +74,30 @@ public class KeyInput extends KeyAdapter{
 					player.diasRestantes = Game.clamp(player.diasRestantes, 0, player.dias);
 					HUD.ENERGY = HUD.FULLENERGY;
 				}
+				else if(player.x >= 530 && player.y >= 170 && player.y <= 400 && key == KeyEvent.VK_ENTER){
+					if(Game.firstTalkGerente){
+						Game.texto = "Olá, cabeçudo! Eu sou o gerente e te contratei porque estávamos precisando de um testador! Que bom que você chegou! Existem 5 computadores e cada "
+								+ "um tem uma lição diferente para você fazer. Ao resolver os 5 problemas, você terá passado pela "
+								+ "introdução de como testar um software e seus conhecimentos serão suficientes para começar os seus estudos!"
+								+ " Se ficar alguma dúvida, pode falar comigo! Se você esquecer algum conceito, estarei disposto a te mostrar novamente! Ao finalizar a lição de um dos computadores é bom vir falar comigo! "
+								+ "Você já pode ir para a fase 1! BOA SORTE!";
+						Game.firstTalkGerente = false;
+						Game.states[0] = Game.dislocked;
+					}
+					else {
+						Mensagem.conteudoGerente = true;
+						Game.gerente();
+					}
+				}
+				else if(player.x <= 161 && player.y >=160 && player.y <= 370 && key == KeyEvent.VK_ENTER){
+					//vera
+					if(Game.firstTalkVera){
+						Game.texto = "As vezes eu posso te dar umas dicas de como testar o software. Depende mesmo do meu humor! "
+								+ "Mas irei tentar ser legal com você, novato!";
+						Game.firstTalkVera = false;
+					}
+					else Game.vera();
+				}
 			}
 			
 		}
