@@ -30,6 +30,7 @@ public class Game extends Canvas implements Runnable{
 	public static BufferedImage locked, dislocked, done;
 	
 	private Mensagem msgs;
+	private MouseObserver mouse;
 	
 	public static Computer computers[] = new Computer[5];
 	
@@ -47,11 +48,14 @@ public class Game extends Canvas implements Runnable{
 		msgs = new Mensagem(this);
 		handler = new Handler();
 		menu = new Menu(this);
+		mouse = new MouseObserver(this);
+		
 		locked = loader.loadImage("/locked.png");
 		dislocked = loader.loadImage("/dislocked.png");
 		done = loader.loadImage("/done.png");
 		this.addMouseListener(msgs);
 		this.addMouseListener(menu);
+		this.addMouseListener(mouse);
 		
 		new Window(WIDTH, HEIGHT, "Game", this);
 		
@@ -199,10 +203,35 @@ public class Game extends Canvas implements Runnable{
 	static boolean firstTalkVera = true;
 	
 	public static void gerente(){
-		String textos[] = {"Acho que você já pode ir testar!","O problema não foi solucionado."
-				, "Eu não sei, cara.", "Acho que sim.", "Pra cima.","Computador, sabe?"};
-		Random r = new Random();
-		Game.texto = textos[r.nextInt(textos.length)];
+		if(states[0] == done && states[1] == locked){
+			Game.texto = "Parabéns pela fase 1! Estava torcendo para o seu sucesso. Sabia que aquela calculadora não era boa coisa. "+
+		"Bom, agora que você fez o que deveria ter feito, vou explicar o que você fez. Você usou uma das técnicas de teste chamada técnica funcional, ou caixa preta! "
+		+ "Nessa técnica é usado o conceito de não ver o código fonte e trabalhar somente com os requisitos. Você analisou os requisitos, montou seus casos de teste e realizou os testes inserindo entradas "
+		+ "válidas, não foi? Meus parabéns outra vez! É assim que nós, testadores, utilizamos a técnica de caixa preta. Ah, e acho que você viu que estava escrito classe de equivalência na documentação, não? Pois bem, nós chamamos assim entradas"
+		+ " que estejam executando o mesmo código. Por exemplo, uma soma com valores positivos. Agora vá testar a fase 2!!";
+			states[1] = dislocked;	
+		}
+		else if(states[1] == done && states[2] == locked){
+			//completou fase 2
+		}
+		else if(states[2] == done && states[3] == locked){
+			//completou fase 3
+		}
+		else if(states[3] == done && states[4] == locked){
+			//completou fase 4
+		}
+		else if(states[4] == done){
+			//completou fase 5
+		}
+		else{
+			String textos[] = {"Acho que você já pode ir testar!","O problema não foi solucionado."
+					, "Eu não sei, cara.", "Acho que sim.", "Pra cima.","Computador, sabe?", 
+					"Eu gosto de trabalhar.", "Lembre-se que testes são muito importantes!", "Eu sou muito bom em testes!",
+					"Você gosta de testar?", "Claro que testamos software antes de entregar para o cliente!", "Técnicas de teste? Hm..."};
+			Random r = new Random();
+			Game.texto = textos[r.nextInt(textos.length)];
+		}
+
 	}
 	
 	public static void vera(){
@@ -212,4 +241,5 @@ public class Game extends Canvas implements Runnable{
 		Random r = new Random();
 		Game.texto = textos[r.nextInt(textos.length)];
 	}
+	
 }

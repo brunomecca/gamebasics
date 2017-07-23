@@ -69,10 +69,19 @@ public class KeyInput extends KeyAdapter{
 					Player.usingComputer = false;
 				}
 				if(player.x >= 238 && player.x <= 348 && player.y >=332 && player.y <= 377 && key == KeyEvent.VK_ENTER){
-					Game.texto = "Energia recuperada! (-1 dia)";
-					player.diasRestantes--;
-					player.diasRestantes = Game.clamp(player.diasRestantes, 0, player.dias);
-					HUD.ENERGY = HUD.FULLENERGY;
+					if(HUD.ENERGY == HUD.FULLENERGY){
+						Game.texto = "Mas já está cansado? Ainda é hora de testar!";
+					}
+					else if(player.diasRestantes > 0){
+						Game.texto = "Energia recuperada! (-1 dia)";
+						player.diasRestantes--;
+						player.diasRestantes = Game.clamp(player.diasRestantes, 0, player.dias);
+						HUD.ENERGY = HUD.FULLENERGY;
+					}
+					else{
+						Game.texto = "Game over! É hora de começar do ZERO.";
+					}
+					
 				}
 				else if(player.x >= 530 && player.y >= 170 && player.y <= 400 && key == KeyEvent.VK_ENTER){
 					if(Game.firstTalkGerente){

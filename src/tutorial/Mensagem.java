@@ -22,7 +22,7 @@ public class Mensagem extends MouseAdapter {
 	
 	public void mousePressed(MouseEvent e){
 		if(!fullTexto.equals("")){
-			if(fullTexto.length() > 60)
+			if(fullTexto.length() > caractere)
 				Game.texto = fullTexto;
 			else{
 				Game.texto = fullTexto.substring(0, fullTexto.length());
@@ -39,7 +39,7 @@ public class Mensagem extends MouseAdapter {
 	public void mouseReleased(MouseEvent e){
 		
 	}
-	
+	int caractere = 60;
 	public void render(Graphics g){
 		if(!Game.texto.equals("")){
 			game.removeKey();
@@ -52,11 +52,15 @@ public class Mensagem extends MouseAdapter {
 			Font fnt = new Font("arial", 1, 20);
 			g.setFont(new Font("arial",1,10));
 			g.drawString("Clique para continuar", 515, 440);
-			g.setFont(fnt);
-			if(Game.texto.length() > 60){
-				fullTexto = Game.texto.substring(60, Game.texto.length());
-				Game.texto = Game.texto.substring(0,60);
+			caractere = 60;
+			if(Game.texto.length() > caractere){
+				while(Game.texto.charAt(caractere) != ' '){
+					caractere--;
+				}
+				fullTexto = Game.texto.substring(caractere, Game.texto.length());
+				Game.texto = Game.texto.substring(0,caractere);
 			}
+			g.setFont(fnt);
 			g.drawString(Game.texto, 3, 350);
 			
 			
