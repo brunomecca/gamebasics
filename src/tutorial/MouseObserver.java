@@ -1,6 +1,5 @@
 package tutorial;
 
-import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -26,7 +25,7 @@ public class MouseObserver extends MouseAdapter {
 				Computer.current = Computer.fase1bg1;
 			}
 			else if(mx >= 500 && mx <= 620 && my >= 340 && my <= 380){ // voltar
-				game.player.playerImage = game.playerImage;
+				game.player.playerImage = Game.playerImage;
 				Computer.request[0] = false;
 				game.addKey();
 				Computer.acontecendo[0] = false;
@@ -34,7 +33,7 @@ public class MouseObserver extends MouseAdapter {
 			}
 			
 		}
-		if(Computer.acontecendo[1]){//fase 2
+		else if(Computer.acontecendo[1]){//fase 2
 			if(mx >= 500 && mx <= 620 && my >= 290 && my <= 325){ // testar
 				Computer.acao = true;
 			}
@@ -51,10 +50,42 @@ public class MouseObserver extends MouseAdapter {
 				Computer.current = Computer.fase2bg1;
 			}
 			else if(mx >= 500 && mx <= 620 && my >= 340 && my <= 380){ // voltar
-				game.player.playerImage = game.playerImage;
+				game.player.playerImage = Game.playerImage;
 				Computer.request[1] = false;
 				game.addKey();
 				Computer.acontecendo[1] = false;
+				Player.usingComputer = false;
+			}
+		}
+		else if(Computer.acontecendo[2]){//fase 3
+			if(mx >= 500 && mx <= 620 && my >= 290 && my <= 325){ // testar
+				Computer.acao = true;
+			}
+			else if(mx >= 395 && mx <= 470 && my >=340 && my <= 370){ // seta
+				Computer.current = Computer.fase3bg2;
+				Computer.objetivosf3[0] = true;
+			}
+			else if(mx >20 && mx <= 100 && my >= 330 && my <= 380){
+				Computer.current = Computer.fase3bg1;
+			}
+			else if(my >= 170 && my <= 190) 
+				Computer.funcionarios[0] = true;
+			else if(my >= 200 && my <= 220) 
+				Computer.funcionarios[1] = true;
+			else if(my >= 225 && my <= 245) 
+				Computer.funcionarios[2] = true;
+			else if(my >= 250 && my <= 265)
+				Computer.funcionarios[3] = true;
+			else if(my >= 270 && my <= 290) 
+				Computer.funcionarios[4] = true;
+			else if(my >= 295 && my <= 315)
+				Computer.funcionarios[5] = true;
+				
+			else if(mx >= 500 && mx <= 620 && my >= 340 && my <= 380){ // voltar
+				game.player.playerImage = Game.playerImage;
+				Computer.request[2] = false;
+				game.addKey();
+				Computer.acontecendo[2] = false;
 				Player.usingComputer = false;
 			}
 		}

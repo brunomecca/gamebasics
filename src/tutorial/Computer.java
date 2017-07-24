@@ -33,6 +33,15 @@ public class Computer extends GameObject{
 	static boolean botaof2[] = new boolean[2];
 	static boolean objetivosf2[] = new boolean[2];
 	
+	//requisitos da fase3
+	static BufferedImage fase3bg1 = Game.loader.loadImage("/fase3/fase3bg1.png");
+	static BufferedImage fase3bg2 = Game.loader.loadImage("/fase3/fase3bg2.png");
+	static boolean objetivosf3[] = new boolean[3];
+	static boolean funcionarios[] = new boolean[6];
+	static boolean funcionariosCorretos[] = new boolean[6];
+	static int checkGe = 0, checkMo = 0, checkRh = 0, checkLi = 0, checkDi = 0, checkEs = 0;
+	static boolean funcionariosTesteValor[] = new boolean[6];
+	
 	public Computer(int x, int y, ID id) {
 		super(x, y, id);
 	}
@@ -92,7 +101,7 @@ public class Computer extends GameObject{
 			System.out.println("USANDO O 1");
 		}
 		else if(this.computerNumber == 2){
-			if(complete[1] == false){
+			if(complete[1] == false || Game.states[1] == Game.locked){
 				Game.texto = "Você ainda não completou a fase 1!";
 				return;
 			}
@@ -101,15 +110,16 @@ public class Computer extends GameObject{
 			System.out.println("USANDO O 2");
 		}
 		else if(this.computerNumber == 3){
-			if(complete[2] == false){
+			if(complete[2] == true){
 				Game.texto = "Você ainda não completou a fase 2!";
 				return;
 			}
+			current = fase3bg1;
 			request[2] = true;
 			System.out.println("USANDO O 3");
 		}
 		else if(this.computerNumber == 4){
-			if(complete[3] == false){
+			if(complete[3] == false || Game.states[3] == Game.locked){
 				Game.texto = "Você ainda não completou a fase 3!";
 				return;
 			}
@@ -117,7 +127,7 @@ public class Computer extends GameObject{
 			System.out.println("USANDO O 4");
 		}
 		else if(this.computerNumber == 5){
-			if(complete[4] == false){
+			if(complete[4] == false || Game.states[4] == Game.locked){
 				Game.texto = "Você ainda não completou a fase 4!";
 				return;
 			}
@@ -290,12 +300,199 @@ public class Computer extends GameObject{
 		if(objetivosf2[1] && objetivosf2[0]){
 			g.drawImage(tick, 550, 170, null);
 			Game.states[1] = Game.done;
+			complete[2] = true;
 		}
 			
 	}
 	
 	public void computer3(Graphics g){
 		Player.usingComputer = true;
+		game.player.playerImage = null;
+		g.drawImage(current, 0, 0, null);
+		if(HUD.ENERGY <= 0){
+			sairPorEnergia(2);
+			return;
+		}
+		game.removeKey();
+		acontecendo[2] = true;
+		
+		if(acao){
+			acao = false;
+			JOptionPane.showMessageDialog( null, "Clique nos funcionários para testar os valores!","Programa rodando!", JOptionPane.PLAIN_MESSAGE );
+		}
+		
+		if(funcionarios[0]){//gerente
+			funcionarios[0] = false;
+			String entrada = JOptionPane.showInputDialog("Escreva o valor para teste do gerente:");
+			if(entrada.matches(".*[0-9]+")){
+				int valor = Integer.parseInt(entrada);
+				if(valor == 3401 || valor == 3399 || valor == 3400){
+					checkGe++;
+					JOptionPane.showMessageDialog(null, "Dentro da análise de valor limite!", "Teste correto!", JOptionPane.PLAIN_MESSAGE);
+				}
+				else if(valor == 720 || valor == 1450 || valor == 1800 || valor == 2300 || valor == 2800 || valor == 3400){
+					funcionariosTesteValor[0] = true;
+					JOptionPane.showMessageDialog(null, "Você testou um salário de outro funcionário!", "Teste correto!", JOptionPane.PLAIN_MESSAGE);
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Valor incorreto! Parece que você não entendeu o conceito!", "Tente de novo!", JOptionPane.ERROR_MESSAGE);
+				}
+
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Somente valores numéricos!", "Tente de novo!", JOptionPane.ERROR_MESSAGE);
+			}
+			if(checkGe == 3){
+				funcionariosCorretos[0] = true;
+			}
+		}
+		else if(funcionarios[1]){//montador de circuito
+			funcionarios[1] = false;
+			String entrada = JOptionPane.showInputDialog("Escreva o valor para teste do montador de circuito:");
+			if(entrada.matches(".*[0-9]+")){
+				int valor = Integer.parseInt(entrada);
+				if(valor == 2800 || valor == 2799 || valor == 2801){
+					checkMo++;
+					JOptionPane.showMessageDialog(null, "Dentro da análise de valor limite!", "Teste correto!", JOptionPane.PLAIN_MESSAGE);
+				}
+				else if(valor == 720 || valor == 1450 || valor == 1800 || valor == 2300 || valor == 2800 || valor == 3400){
+					funcionariosTesteValor[1] = true;
+					JOptionPane.showMessageDialog(null, "Você testou um salário de outro funcionário!", "Teste correto!", JOptionPane.PLAIN_MESSAGE);
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Valor incorreto! Parece que você não entendeu o conceito!", "Tente de novo!", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Somente valores numéricos!", "Tente de novo!", JOptionPane.ERROR_MESSAGE);
+			}
+			if(checkMo == 3){
+				funcionariosCorretos[1] = true;
+			}
+		}
+		else if(funcionarios[2]){//pessoal rh
+			funcionarios[2] = false;
+			String entrada = JOptionPane.showInputDialog("Escreva o valor para teste do pessoal do RH:");
+			if(entrada.matches(".*[0-9]+")){
+				int valor = Integer.parseInt(entrada);
+				if(valor == 2300 || valor == 2299 || valor == 2301){
+					checkRh++;
+					JOptionPane.showMessageDialog(null, "Dentro da análise de valor limite!", "Teste correto!", JOptionPane.PLAIN_MESSAGE);
+				}
+				else if(valor == 720 || valor == 1450 || valor == 1800 || valor == 2300 || valor == 2800 || valor == 3400){
+					funcionariosTesteValor[2] = true;
+					JOptionPane.showMessageDialog(null, "Você testou um salário de outro funcionário!", "Teste correto!", JOptionPane.PLAIN_MESSAGE);
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Valor incorreto! Parece que você não entendeu o conceito!", "Tente de novo!", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Somente valores numéricos!", "Tente de novo!", JOptionPane.ERROR_MESSAGE);
+			}
+			if(checkRh == 3){
+				funcionariosCorretos[2] = true;
+			}
+		}
+		else if(funcionarios[3]){//pessoal limpeza
+			funcionarios[3] = false;
+			String entrada = JOptionPane.showInputDialog("Escreva o valor para teste do pessoal da limpeza:");
+			if(entrada.matches(".*[0-9]+")){
+				int valor = Integer.parseInt(entrada);
+				if(valor == 1800 || valor == 1799 || valor == 1801){
+					checkLi++;
+					JOptionPane.showMessageDialog(null, "Dentro da análise de valor limite!", "Teste correto!", JOptionPane.PLAIN_MESSAGE);
+				}
+				else if(valor == 720 || valor == 1450 || valor == 1800 || valor == 2300 || valor == 2800 || valor == 3400){
+					funcionariosTesteValor[3] = true;
+					JOptionPane.showMessageDialog(null, "Você testou um salário de outro funcionário!", "Teste correto!", JOptionPane.PLAIN_MESSAGE);
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Valor incorreto! Parece que você não entendeu o conceito!", "Tente de novo!", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Somente valores numéricos!", "Tente de novo!", JOptionPane.ERROR_MESSAGE);
+			}
+			if(checkLi == 3){
+				funcionariosCorretos[3] = true;
+			}
+		}
+		else if(funcionarios[4]){//digitador
+			funcionarios[4] = false;
+			String entrada = JOptionPane.showInputDialog("Escreva o valor para teste do digitador:");
+			if(entrada.matches(".*[0-9]+")){
+				int valor = Integer.parseInt(entrada);
+				if(valor == 1450 || valor == 1451 || valor == 1449){
+					checkDi++;
+					JOptionPane.showMessageDialog(null, "Dentro da análise de valor limite!", "Teste correto!", JOptionPane.PLAIN_MESSAGE);
+				}
+				else if(valor == 720 || valor == 1450 || valor == 1800 || valor == 2300 || valor == 2800 || valor == 3400){
+					funcionariosTesteValor[4] = true;
+					JOptionPane.showMessageDialog(null, "Você testou um salário de outro funcionário!", "Teste correto!", JOptionPane.PLAIN_MESSAGE);
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Valor incorreto! Parece que você não entendeu o conceito!", "Tente de novo!", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Somente valores numéricos!", "Tente de novo!", JOptionPane.ERROR_MESSAGE);
+			}
+			if(checkDi == 3){
+				funcionariosCorretos[4] = true;
+			}
+		}
+		else if(funcionarios[5]){//estagiario
+			funcionarios[5] = false;
+			String entrada = JOptionPane.showInputDialog("Escreva o valor para teste do estagiário:");
+			if(entrada.matches(".*[0-9]+")){
+				int valor = Integer.parseInt(entrada);
+				if(valor == 720 || valor == 721 || valor == 719){
+					checkEs++;
+					JOptionPane.showMessageDialog(null, "Dentro da análise de valor limite!", "Teste correto!", JOptionPane.PLAIN_MESSAGE);
+				}
+				else if(valor == 720 || valor == 1450 || valor == 1800 || valor == 2300 || valor == 2800 || valor == 3400){
+					funcionariosTesteValor[5] = true;
+					JOptionPane.showMessageDialog(null, "Você testou um salário de outro funcionário!", "Teste correto!", JOptionPane.PLAIN_MESSAGE);
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Valor incorreto! Parece que você não entendeu o conceito!", "Tente de novo!", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Somente valores numéricos!", "Tente de novo!", JOptionPane.ERROR_MESSAGE);
+			}
+			if(checkEs == 3){
+				funcionariosCorretos[5] = true;
+			}
+		}
+	
+		if(funcionariosCorretos[0] && current == fase3bg1) g.drawImage(tick,260, 150,null);
+		if(funcionariosCorretos[1] && current == fase3bg1) g.drawImage(tick,408, 178,null);
+		if(funcionariosCorretos[2] && current == fase3bg1) g.drawImage(tick,335, 198,null);
+		if(funcionariosCorretos[3] && current == fase3bg1) g.drawImage(tick,378, 218,null);
+		if(funcionariosCorretos[4] && current == fase3bg1) g.drawImage(tick,267, 238,null);
+		if(funcionariosCorretos[5] && current == fase3bg1) g.drawImage(tick,277, 268,null);
+		
+		objetivosf3[2] = true;
+		objetivosf3[1] = true;
+		for(int i =0 ; i < 6 ;i++){
+			if(funcionariosCorretos[i] == false)
+				objetivosf3[2] = false;
+			if(funcionariosTesteValor[i] == false)
+				objetivosf3[1] = false;
+		}
+		
+		if(objetivosf3[0])
+			g.drawImage(tick,550, 140,null);
+		if(objetivosf3[2])
+			g.drawImage(tick, 550, 220, null);
+		if(objetivosf3[1])
+			g.drawImage(tick, 550, 70, null);
+		if(objetivosf3[0] && objetivosf3[1] && objetivosf3[2]){
+			Game.states[2] = Game.done;
+			complete[3] = true;
+		}
 	}
 	
 	public void computer4(Graphics g){
@@ -311,8 +508,8 @@ public class Computer extends GameObject{
 		game.addKey();
 		game.player.playerImage = Game.playerImage;
 		acontecendo[fase] = false;
-		request[0] = false;
-		Game.texto = "Você ficou sem energia para continuar a fase 1! Recupere sua energia e tente de novo!";
+		request[fase] = false;
+		Game.texto = "Você ficou sem energia para continuar a fase! Recupere sua energia e tente de novo!";
 	}
 	
 }

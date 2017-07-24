@@ -212,10 +212,20 @@ public class Game extends Canvas implements Runnable{
 			states[1] = dislocked;	
 		}
 		else if(states[1] == done && states[2] == locked){
-			Game.texto = "fASE2";
-		}
+			Game.texto = "Parabéns pela fase 2, cabeçudo! Eu e toda a equipe escondida estamos satisfeitos com o seu trabalho!"
+					+ " Você conseguiu treinar as questões do Java e ainda saber um pouco mais sobre teste de caixa branca! Esse é um teste"
+					+ " onde é possível ver o código fonte e as entrada são selecionadas para passar por parte do código. O que você fez é o"
+					+ " oposto do teste de caixa preta. Você se baseou nos caminhos internos do programa para testar, o que é muito bom! Porém, como você pode perceber"
+					+ ", essa técnica requer conhecimento do código. A próxima fase vai ser melhor ainda! Lembre-se que você pode vir à mim para rever algum conceito!";
+			
+			states[2] = dislocked;
+		} 
 		else if(states[2] == done && states[3] == locked){
-			//completou fase 3
+			Game.texto = "Parabéns pela fase 3, cabeçudo! Agora, além do conceito de caixa preta estar bem fixado, "
+					+ "você conhece um critério dessa análise. Esse critério é conhecido como análise de valor limite como foi visto"
+					+ " e é sugerido uma análise do limtie superior, inferior e logo no limite para análise das classes de equivalência. "
+					+ "Você já passou mais da metade do game! Agora somente faltam 2 fases e é onde o desafio realmente vai começar! Prossiga!";
+			states[3] = dislocked;
 		}
 		else if(states[3] == done && states[4] == locked){
 			//completou fase 4
