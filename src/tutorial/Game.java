@@ -207,12 +207,12 @@ public class Game extends Canvas implements Runnable{
 			Game.texto = "Parabéns pela fase 1! Estava torcendo para o seu sucesso. Sabia que aquela calculadora não era boa coisa. "+
 		"Bom, agora que você fez o que deveria ter feito, vou explicar o que você fez. Você usou uma das técnicas de teste chamada técnica funcional, ou caixa preta! "
 		+ "Nessa técnica é usado o conceito de não ver o código fonte e trabalhar somente com os requisitos. Você analisou os requisitos, montou seus casos de teste e realizou os testes inserindo entradas "
-		+ "válidas, não foi? Meus parabéns outra vez! É assim que nós, testadores, utilizamos a técnica de caixa preta. Ah, e acho que você viu que estava escrito classe de equivalência na documentação, não? Pois bem, nós chamamos assim entradas"
+		+ "válidas, não foi? E ainda você decidiu se as saídas estavam corretas ou não. Quem faz essa função é chamado de oráculo. Meus parabéns outra vez! É assim que nós, testadores, utilizamos a técnica de caixa preta. Ah, e acho que você viu que estava escrito classe de equivalência na documentação, não? Pois bem, nós chamamos assim entradas"
 		+ " que estejam executando o mesmo código. Por exemplo, uma soma com valores positivos. Agora vá testar a fase 2!!";
 			states[1] = dislocked;	
 		}
 		else if(states[1] == done && states[2] == locked){
-			//completou fase 2
+			Game.texto = "fASE2";
 		}
 		else if(states[2] == done && states[3] == locked){
 			//completou fase 3

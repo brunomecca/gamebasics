@@ -26,6 +26,13 @@ public class Computer extends GameObject{
 	static boolean operacoes[] = new boolean[5];
 	static boolean teste[] = new boolean[5];
 	
+	//requisitos da fase2
+	static BufferedImage fase2bg1 = Game.loader.loadImage("/fase2/fase2bg1.png");
+	static BufferedImage fase2bg2 = Game.loader.loadImage("/fase2/fase2bg2.png");
+	static boolean erros[] = new boolean[2];
+	static boolean botaof2[] = new boolean[2];
+	static boolean objetivosf2[] = new boolean[2];
+	
 	public Computer(int x, int y, ID id) {
 		super(x, y, id);
 	}
@@ -89,6 +96,7 @@ public class Computer extends GameObject{
 				Game.texto = "Você ainda não completou a fase 1!";
 				return;
 			}
+			current = fase2bg1;
 			request[1] = true;
 			System.out.println("USANDO O 2");
 		}
@@ -231,7 +239,59 @@ public class Computer extends GameObject{
 	
 	public void computer2(Graphics g){
 		Player.usingComputer = true;
+		game.player.playerImage = null;
+		g.drawImage(current, 0, 0, null);
+		if(HUD.ENERGY <= 0){
+			sairPorEnergia(1);
+			return;
+		}
+		game.removeKey();
 		acontecendo[1] = true;
+		if(acao){
+			acao = false;
+			if(erros[0] == false || erros[1] == false){
+				JOptionPane.showMessageDialog(null, "Corrija os erros para executar um teste!", "Ainda não!", JOptionPane.ERROR_MESSAGE);
+			}
+			else{
+				String entrada = JOptionPane.showInputDialog("Escreva a entrada para teste:");
+				if(entrada.contains("gerente")){
+					objetivosf2[0] = true;
+				}
+				if(entrada.matches(".*[0-9]+"))
+					if(Integer.parseInt(entrada) >= 30)
+						objetivosf2[1] = true;
+			}
+		}
+		if(botaof2[0]){
+			botaof2[0] = false;
+			String entrada = JOptionPane.showInputDialog("Escreva o novo conteúdo da linha:");
+			if(entrada.contains("cargo") && entrada.contains("local") && entrada.contains("idade")){
+				erros[0] = true;
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Linha incorreta!", "Tente de novo!", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		else if(botaof2[1]){
+			botaof2[1] = false;
+			String entrada = JOptionPane.showInputDialog("Escreva o novo conteúdo da linha:");
+			if(entrada.contains("equals")){
+				erros[1] = true;
+			}
+		}
+		if(erros[0] && current != fase2bg2)
+			g.drawImage(tick, 283, 219-40, null);
+		if(erros[1] && current != fase2bg2)
+			g.drawImage(tick, 283, 219, null);
+		if(erros[0] && erros[1])
+			g.drawImage(tick, 550, 60, null);
+		if(objetivosf2[0])
+			g.drawImage(tick, 550, 110, null);
+		if(objetivosf2[1] && objetivosf2[0]){
+			g.drawImage(tick, 550, 170, null);
+			Game.states[1] = Game.done;
+		}
+			
 	}
 	
 	public void computer3(Graphics g){
