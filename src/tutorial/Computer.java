@@ -42,6 +42,19 @@ public class Computer extends GameObject{
 	static int checkGe = 0, checkMo = 0, checkRh = 0, checkLi = 0, checkDi = 0, checkEs = 0;
 	static boolean funcionariosTesteValor[] = new boolean[6];
 	
+	//requisitos da fase4
+	static BufferedImage fase4bg1 = Game.loader.loadImage("/fase4/fase4bg1.png");
+	static BufferedImage fase4bg2 = Game.loader.loadImage("/fase4/fase4bg2.png");
+	static boolean objetivosf4[] = new boolean[2];
+	static boolean vertices[] = new boolean[13];
+	
+	//requisitos da fase5
+	static BufferedImage fase5bg1 = Game.loader.loadImage("/fase5/fase5bg1.png");
+	static BufferedImage fase5bg2 = Game.loader.loadImage("/fase5/fase5bg2.png");
+	static boolean objetivosf5[] = new boolean[2];
+	static int entradas1 = 0;
+	static boolean entradas[] = new boolean[6];
+	
 	public Computer(int x, int y, ID id) {
 		super(x, y, id);
 	}
@@ -55,6 +68,7 @@ public class Computer extends GameObject{
 			request[i] = false;
 		this.game = game;
 		tick = Game.loader.loadImage("/tick.png");
+		
 	}
 	
 	@Override
@@ -110,7 +124,7 @@ public class Computer extends GameObject{
 			System.out.println("USANDO O 2");
 		}
 		else if(this.computerNumber == 3){
-			if(complete[2] == true){
+			if(complete[2] == false || Game.states[2] == Game.locked){
 				Game.texto = "Você ainda não completou a fase 2!";
 				return;
 			}
@@ -119,11 +133,12 @@ public class Computer extends GameObject{
 			System.out.println("USANDO O 3");
 		}
 		else if(this.computerNumber == 4){
-			if(complete[3] == false || Game.states[3] == Game.locked){
+			if(complete[3] == true){
 				Game.texto = "Você ainda não completou a fase 3!";
 				return;
 			}
 			request[3] = true;
+			current = fase4bg1;
 			System.out.println("USANDO O 4");
 		}
 		else if(this.computerNumber == 5){
@@ -132,6 +147,8 @@ public class Computer extends GameObject{
 				return;
 			}
 			request[4] = true;
+			current = fase5bg1;
+			
 			System.out.println("USANDO O 5");
 		}
 	}
@@ -329,6 +346,7 @@ public class Computer extends GameObject{
 				if(valor == 3401 || valor == 3399 || valor == 3400){
 					checkGe++;
 					JOptionPane.showMessageDialog(null, "Dentro da análise de valor limite!", "Teste correto!", JOptionPane.PLAIN_MESSAGE);
+					
 				}
 				else if(valor == 720 || valor == 1450 || valor == 1800 || valor == 2300 || valor == 2800 || valor == 3400){
 					funcionariosTesteValor[0] = true;
@@ -426,6 +444,9 @@ public class Computer extends GameObject{
 				if(valor == 1450 || valor == 1451 || valor == 1449){
 					checkDi++;
 					JOptionPane.showMessageDialog(null, "Dentro da análise de valor limite!", "Teste correto!", JOptionPane.PLAIN_MESSAGE);
+					if(valor == 1451){
+						JOptionPane.showMessageDialog(null, "Você encontrou um erro! O salário do digitador foi aceito como 1451! Então, é possível estipular que também vale para R$1800, R$5000 e até R$10000! Coloque isso no seu relatório e diga para o gerente!", "Teste correto!", JOptionPane.PLAIN_MESSAGE);
+					}
 				}
 				else if(valor == 720 || valor == 1450 || valor == 1800 || valor == 2300 || valor == 2800 || valor == 3400){
 					funcionariosTesteValor[4] = true;
@@ -497,10 +518,130 @@ public class Computer extends GameObject{
 	
 	public void computer4(Graphics g){
 		Player.usingComputer = true;
+		game.player.playerImage = null;
+		g.drawImage(current, 0, 0, null);
+		if(HUD.ENERGY <= 0){
+			sairPorEnergia(3);
+			return;
+		}
+		game.removeKey();
+		acontecendo[3] = true;
+		
+		if(acao){
+			acao = false;
+			String entrada = JOptionPane.showInputDialog("Escreva o valor para teste do digitador:");
+			if(entrada.matches(".*[0-9]+")){
+				int valor = Integer.parseInt(entrada);
+				if(valor == 6){
+					objetivosf4[1] = true;
+					JOptionPane.showMessageDialog(null, "Você acertou a complexidade ciclomática!", "Teste correto!", JOptionPane.PLAIN_MESSAGE);
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Valor incorreto! Parece que você não entendeu o conceito!", "Tente de novo!", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Somente números!", "Tente de novo!", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		
+		objetivosf4[0] = true;
+		for(int i = 0;i < 13;i++)
+			if(vertices[i] == false)
+				objetivosf4[0] = false;
+			else if(current == fase4bg2){
+				if(i == 0)
+					g.drawImage(tick, 400, 0,null);
+				else if(i == 1)
+					g.drawImage(tick, 400, 30,null);
+				else if(i == 2)
+					g.drawImage(tick, 400, 80,null);
+				else if(i == 3)
+					g.drawImage(tick, 400, 120,null);
+				else if(i == 4)
+					g.drawImage(tick, 400, 160,null);
+				else if(i == 5)
+					g.drawImage(tick, 400, 200,null);
+				else if(i == 6)
+					g.drawImage(tick, 430, 240,null);//7
+				else if(i == 7)
+					g.drawImage(tick, 370, 240,null);//8
+				else if(i == 8)
+					g.drawImage(tick, 400, 280,null);//
+				else if(i == 9)
+					g.drawImage(tick, 300, 120,null);//
+				else if(i == 10)
+					g.drawImage(tick, 270, 160,null);
+					
+				else if(i == 11)
+					g.drawImage(tick, 350, 160,null);
+				else if(i == 12)
+					g.drawImage(tick, 300, 180,null);//13
+			}
+
+		if(objetivosf4[0])
+			g.drawImage(tick,550,70,null);
+		if(objetivosf4[1])
+			g.drawImage(tick, 550, 180,null);
+		if(objetivosf4[0] && objetivosf4[1]){
+			Game.states[3] = Game.done;
+			complete[4] = true;
+		}
 	}
 	
 	public void computer5(Graphics g){
 		Player.usingComputer = true;
+		game.player.playerImage = null;
+		g.drawImage(current, 0, 0, null);
+		if(HUD.ENERGY <= 0){
+			sairPorEnergia(4);
+			return;
+		}
+		game.removeKey();
+		acontecendo[4] = true;
+		if(acao){
+			acao = false;
+			String entrada = JOptionPane.showInputDialog("Escreva o valor 1 para teste:");
+			if(entrada.matches(".*[0-9]+")){
+				int valor = Integer.parseInt(entrada);
+				if(valor == 0 && !entradas[0]){
+					entradas1++;
+					entradas[0] = true;
+				}
+				else if(valor == 1 && !entradas[1]){
+					entradas1++;
+					entradas[1] = true;
+				}
+				else if(valor == -1 && !entradas[2]){
+					entradas1++;
+					entradas[2] = true;
+				}
+				else if(valor == 499999 && !entradas[3]){
+					entradas1++;
+					entradas[3] = true;
+				}
+				else if(valor == 500000 && !entradas[4]){
+					entradas1++;
+					entradas[4] = true;
+					
+				}
+				else if(valor == 500001 && !entradas[5]){
+					entradas1++;
+					entradas[5] = true;
+				}
+				if(entradas1 == 6){
+					objetivosf5[1] = true;
+				}
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Somente números!", "Tente de novo!", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		
+		if(objetivosf5[1]){
+			Game.states[4] = Game.done;
+			g.drawImage(tick, 550, 150, null);
+		}
 	}
 	
 	public void sairPorEnergia(int fase){

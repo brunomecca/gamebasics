@@ -135,7 +135,7 @@ public class Game extends Canvas implements Runnable{
 
 				}		
 				mainScene = loader.loadImage("/cenario.png");
-				player = new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player, 10);
+				player = new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player, 5);
 				handler.addObject(player);
 				
 				firstTimeLoader = false;
@@ -201,7 +201,7 @@ public class Game extends Canvas implements Runnable{
 	
 	static boolean firstTalkGerente = true;
 	static boolean firstTalkVera = true;
-	
+	static int dias = 0;
 	public static void gerente(){
 		if(states[0] == done && states[1] == locked){
 			Game.texto = "Parabéns pela fase 1! Estava torcendo para o seu sucesso. Sabia que aquela calculadora não era boa coisa. "+
@@ -216,30 +216,37 @@ public class Game extends Canvas implements Runnable{
 					+ " Você conseguiu treinar as questões do Java e ainda saber um pouco mais sobre teste de caixa branca! Esse é um teste"
 					+ " onde é possível ver o código fonte e as entrada são selecionadas para passar por parte do código. O que você fez é o"
 					+ " oposto do teste de caixa preta. Você se baseou nos caminhos internos do programa para testar, o que é muito bom! Porém, como você pode perceber"
-					+ ", essa técnica requer conhecimento do código. A próxima fase vai ser melhor ainda! Lembre-se que você pode vir à mim para rever algum conceito!";
+					+ ", essa técnica requer conhecimento do código. A próxima fase vai ser melhor ainda! Lembre-se que você pode ir até a Vera para rever algum conceito!";
 			
 			states[2] = dislocked;
 		} 
 		else if(states[2] == done && states[3] == locked){
-			Game.texto = "Parabéns pela fase 3, cabeçudo! Agora, além do conceito de caixa preta estar bem fixado, "
+			Game.texto = "Sabia que aquele programa tinha erros! O salário do digitador poderia ser alterado, então? Que bom que nada aconteceu durante esse período sem testes, mas foi uma ocorrência de sorte. Parabéns pela fase 3, cabeçudo! Agora, além do conceito de caixa preta estar bem fixado, "
 					+ "você conhece um critério dessa análise. Esse critério é conhecido como análise de valor limite como foi visto"
 					+ " e é sugerido uma análise do limtie superior, inferior e logo no limite para análise das classes de equivalência. "
 					+ "Você já passou mais da metade do game! Agora somente faltam 2 fases e é onde o desafio realmente vai começar! Prossiga!";
 			states[3] = dislocked;
 		}
 		else if(states[3] == done && states[4] == locked){
-			//completou fase 4
+			 Game.texto = "Muito bem! Parabéns pela fase 4! Você já esta na fase final do processo de introdução ao teste de software. "
+			 		+ "Você viu que complexidade ciclomática é um assunto importante e define o quanto complexo um programa pode ser para ser testado. "
+			 		+ "Mesmo um programa simples de média tem a sua complexidade em 6 e 13 vértices!! Bom, agora você está pronto para a última fase! "
+			 		+ "Corra e vá testar! NOSSA! Aconteceu um imprevisto e parece que só temos mais um dia restante para testarmos "
+					+ "essa fase! Sua barra de energia ficará cheia, mas você só terá mais esse dia para terminar a "
+					+ "fase 5! CORRA E TERMINE LOGO ESSA FASE! O verdadeiro teste começa agora!";
+			 dias = Player.diasRestantes;
+			 Player.diasRestantes = 1;
+			 HUD.ENERGY = HUD.FULLENERGY;
+			 states[4] = dislocked;
 		}
 		else if(states[4] == done){
-			//completou fase 5
-		}
-		else{
-			String textos[] = {"Acho que você já pode ir testar!","O problema não foi solucionado."
-					, "Eu não sei, cara.", "Acho que sim.", "Pra cima.","Computador, sabe?", 
-					"Eu gosto de trabalhar.", "Lembre-se que testes são muito importantes!", "Eu sou muito bom em testes!",
-					"Você gosta de testar?", "Claro que testamos software antes de entregar para o cliente!", "Técnicas de teste? Hm..."};
-			Random r = new Random();
-			Game.texto = textos[r.nextInt(textos.length)];
+			if(HUD.ENERGY <= 0){
+				Game.texto = "Parece que você não entendeu o último conceito e ficou testando até desmaiar! Seu objetivo era apenas testar o valor limite, já que é impossível realizar o teste exaustivo daquele jeito. O verdeiro teste da fase 5 era somente realizar a análise do valor limite e me questionar sobre a fase 5. Você chegou até a fase 5 com " + dias + " dias restantes";
+			}
+			else{
+				Game.texto = "Parabéns por ter realizado todas as fases do jogo! O verdadeiro teste foi o final! Você conseguiu perceber que o último teste era impossível! Agora você já pode ser considerado um tester PROFISSIONAL! "
+					+ "Seus estudos em testes nunca foram tão bem definidos como hoje. E, além disso, você terminou o jogo com " + Player.diasRestantes + " dias restantes." ;
+			}
 		}
 
 	}
@@ -247,7 +254,10 @@ public class Game extends Canvas implements Runnable{
 	public static void vera(){
 		String textos[] = {"Eu sou a Vera mesmo!","Sou muito bonita."
 				, "Teste exaustivo é outra história!", "Teste caixa branca é aquele que vemos o código.", "As vezes um ponto e vírgula faz a diferença."
-				,"C A I X A  P R E T A ! Esse é fácil, mas temos que bolar os testes."};
+				,"C A I X A  P R E T A ! Esse é fácil, mas temos que bolar os testes.","Classe de equivalência é um método de redução do conjunto de entradas"
+						+ " de forma que o conjunto fique finito, pequeno e mais eficiente! Ela divide os dados em setores de um mesmo padrão de entrada. É útil para analisar que "
+						+ "tal entrada testa as mesmas partes do código.", "Oráculo é aquele que decide se o caso de teste passou ou não.", "No teste caixa branca "
+								+ "a visualização do código é válida!", "V E R A"};
 		Random r = new Random();
 		Game.texto = textos[r.nextInt(textos.length)];
 	}

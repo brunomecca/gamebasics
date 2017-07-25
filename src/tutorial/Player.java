@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class Player extends GameObject{
 	public BufferedImage playerImage;
-	int dias = 10, diasRestantes;
+	static int dias = 10, diasRestantes;
 	public static boolean usingComputer = false;
 	
 	public Player(int x, int y, ID id, int dias){
